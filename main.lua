@@ -11,6 +11,8 @@
     local obstacle03Right
     local obstacle04Right
     local obstacle04Left
+    local obstacle05Right -- which is out of canvas at the init
+    local obstacle05Left -- which is out of canvas at the init
 
     --function to draw idiotic player
     local function addPlayer()
@@ -39,14 +41,36 @@
     	obstacle01Left.r = math.random()
     	obstacle01Left.g = math.random()
     	obstacle01Left.b = math.random()
+
+    	obstacle02Left.r = math.random()
+    	obstacle02Left.g = math.random()
+    	obstacle02Left.b = math.random()
+
+    	obstacle03Left.r = math.random()
+    	obstacle03Left.g = math.random()
+    	obstacle03Left.b = math.random()
+
+    	obstacle04Left.r = math.random()
+    	obstacle04Left.g = math.random()
+    	obstacle04Left.b = math.random()
+
     	obstacle01Left:setFillColor(obstacle01Left.r,obstacle01Left.g,obstacle01Left.b)
     	obstacle01Right:setFillColor(obstacle01Left.r,obstacle01Left.g,obstacle01Left.b)
+
+    	obstacle02Left:setFillColor(obstacle02Left.r,obstacle02Left.g,obstacle02Left.b)
+    	obstacle02Right:setFillColor(obstacle02Left.r,obstacle02Left.g,obstacle02Left.b)
+
+    	obstacle03Left:setFillColor(obstacle03Left.r,obstacle03Left.g,obstacle03Left.b)
+    	obstacle03Right:setFillColor(obstacle03Left.r,obstacle03Left.g,obstacle03Left.b)
+
+    	obstacle04Left:setFillColor(obstacle04Left.r,obstacle04Left.g,obstacle04Left.b)
+    	obstacle04Right:setFillColor(obstacle04Left.r,obstacle04Left.g,obstacle04Left.b)
     end
 
     --scrollable bg main
     local function addScrollableBg()  
         local bgImage = { type="image", filename="bg_main.jpg" }
-        local bgImage2 = {type = "image",filename="deneme2.jpg"}
+        --local bgImage2 = {type = "image",filename="deneme2.jpg"}
         -- Add First bg image
         bg1 = display.newRect(0, 0, display.contentWidth, display.actualContentHeight)
         bg1.fill = bgImage
@@ -84,8 +108,14 @@
         local dt = getDeltaTime()
         moveBg(dt)
         if obstacle01Left ~=nil then
-        	--obstacle01Left.y = obstacle01Left.y + scrollSpeed + 3.8
-        	--obstacle01Right.y = obstacle01Right.y + scrollSpeed + 3.8
+        	obstacle01Left.y = obstacle01Left.y + scrollSpeed + 3.8
+        	obstacle01Right.y = obstacle01Right.y + scrollSpeed + 3.8
+        	obstacle02Left.y = obstacle02Left.y + scrollSpeed + 3.8
+        	obstacle02Right.y = obstacle02Right.y + scrollSpeed + 3.8
+        	obstacle03Left.y = obstacle03Left.y + scrollSpeed + 3.8
+        	obstacle03Right.y = obstacle03Right.y + scrollSpeed + 3.8
+        	obstacle04Left.y = obstacle04Left.y + scrollSpeed + 3.8
+        	obstacle04Right.y = obstacle04Right.y + scrollSpeed + 3.8
         	--print(obstacle01Right.y)
         end
     end
@@ -107,15 +137,58 @@
     local speedUp = timer.performWithDelay(1000, speedUpScroll, 0)
     
     local randomY01 = math.random(100,740)
-    local randomdistancebetweenObjects = math.random(840,900)
+    
+    local randomY02 = math.random(100,740) -- distance between first obs. from bottom and second
+    local randomX02 = math.random(850,1000) -- distance between second level obstacles
 
-    obstacle01Left = display.newRect(0, 1200, randomY01, 150)
+    local randomY03 = math.random(100,740) -- distance between second obs. from bottom and third
+    local randomX03 = math.random(450,600) -- distance between third level obstacles
+
+    local randomY04 = math.random(100,740) -- distance between third obs. from bottom and fourth
+    local randomX04 = math.random(50,200) -- distance between fourth level obstacles
+
+    local randomdistancebetweenObject1 = math.random(840,900) -- distance between first obs. from bottom
+    local randomdistancebetweenObject2 = math.random(840,900) -- distance between second obs. from bottom
+    local randomdistancebetweenObject3 = math.random(840,900) -- distance between third obs. from bottom
+    local randomdistancebetweenObject4 = math.random(840,900) -- distance between fourth obs. from bottom
+
+    -- first set of obstacles
+    obstacle01Left = display.newRect(0, 1300, randomY01, 150)
     obstacle01Left.anchorX = 0
     obstacle01Left.align = "left"
 
-    obstacle01Right = display.newRect(display.contentWidth, 1200, randomdistancebetweenObjects - randomY01, 150)
+    obstacle01Right = display.newRect(display.contentWidth, 1300, randomdistancebetweenObject1 - randomY01, 150)
     obstacle01Right.anchorX = 1
     obstacle01Right.align = "right"
+
+    -- second set of obstacles
+    obstacle02Left = display.newRect(0, randomX02, randomY02, 150)
+    obstacle02Left.anchorX = 0
+    obstacle02Left.align = "left"
+
+    obstacle02Right = display.newRect(display.contentWidth, randomX02, randomdistancebetweenObject2 - randomY02, 150)
+    obstacle02Right.anchorX = 1
+    obstacle02Right.align = "right"
+
+    -- third set of obstacles
+    obstacle03Left = display.newRect(0, randomX03, randomY03, 150)
+    obstacle03Left.anchorX = 0
+    obstacle03Left.align = "left"
+
+    obstacle03Right = display.newRect(display.contentWidth, randomX03, randomdistancebetweenObject3 - randomY03, 150)
+    obstacle03Right.anchorX = 1
+    obstacle03Right.align = "right"
+
+    -- fourth set of obstacles
+    obstacle04Left = display.newRect(0, randomX04, randomY04, 150)
+    obstacle04Left.anchorX = 0
+    obstacle04Left.align = "left"
+
+    obstacle04Right = display.newRect(display.contentWidth, randomX04, randomdistancebetweenObject4 - randomY04, 150)
+    obstacle04Right.anchorX = 1
+    obstacle04Right.align = "right"
+
+
    	
     local randomColor = timer.performWithDelay(50, randomcolorFill, 0)
 
