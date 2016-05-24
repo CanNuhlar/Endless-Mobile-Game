@@ -54,6 +54,10 @@
     	obstacle04Left.g = math.random()
     	obstacle04Left.b = math.random()
 
+    	obstacle05Left.r = math.random()
+    	obstacle05Left.g = math.random()
+    	obstacle05Left.b = math.random()
+
     	obstacle01Left:setFillColor(obstacle01Left.r,obstacle01Left.g,obstacle01Left.b)
     	obstacle01Right:setFillColor(obstacle01Left.r,obstacle01Left.g,obstacle01Left.b)
 
@@ -65,6 +69,9 @@
 
     	obstacle04Left:setFillColor(obstacle04Left.r,obstacle04Left.g,obstacle04Left.b)
     	obstacle04Right:setFillColor(obstacle04Left.r,obstacle04Left.g,obstacle04Left.b)
+
+    	obstacle05Left:setFillColor(obstacle04Left.r,obstacle04Left.g,obstacle04Left.b)
+    	obstacle05Right:setFillColor(obstacle04Left.r,obstacle04Left.g,obstacle04Left.b)
     end
 
     --scrollable bg main
@@ -116,6 +123,8 @@
         	obstacle03Right.y = obstacle03Right.y + scrollSpeed + 3.8
         	obstacle04Left.y = obstacle04Left.y + scrollSpeed + 3.8
         	obstacle04Right.y = obstacle04Right.y + scrollSpeed + 3.8
+        	obstacle05Left.y = obstacle05Left.y + scrollSpeed + 3.8
+        	obstacle05Right.y = obstacle05Right.y + scrollSpeed + 3.8
         	--print(obstacle01Right.y)
         end
     end
@@ -147,11 +156,14 @@
     local randomY04 = math.random(100,740) -- distance between third obs. from bottom and fourth
     local randomX04 = math.random(50,200) -- distance between fourth level obstacles
 
+    local randomY05 = math.random(100,740) 
+    local randomX05 = math.random(-350,-200)
+
     local randomdistancebetweenObject1 = math.random(840,900) -- distance between first obs. from bottom
     local randomdistancebetweenObject2 = math.random(840,900) -- distance between second obs. from bottom
     local randomdistancebetweenObject3 = math.random(840,900) -- distance between third obs. from bottom
     local randomdistancebetweenObject4 = math.random(840,900) -- distance between fourth obs. from bottom
-
+	local randomdistancebetweenObject5 = math.random(840,900) -- distance between fourth obs. from bottom
     -- first set of obstacles
     obstacle01Left = display.newRect(0, 1300, randomY01, 150)
     obstacle01Left.anchorX = 0
@@ -187,6 +199,15 @@
     obstacle04Right = display.newRect(display.contentWidth, randomX04, randomdistancebetweenObject4 - randomY04, 150)
     obstacle04Right.anchorX = 1
     obstacle04Right.align = "right"
+
+    -- fifth set of obstacles
+    obstacle05Left = display.newRect(0, randomX05, randomY05, 150)
+    obstacle05Left.anchorX = 0
+    obstacle05Left.align = "left"
+
+    obstacle05Right = display.newRect(display.contentWidth, randomX05, randomdistancebetweenObject4 - randomY05, 150)
+    obstacle05Right.anchorX = 1
+    obstacle05Right.align = "right"
 
 
    	
