@@ -1,7 +1,7 @@
     local bg1  
     local bg2  
     local runtime = 0  
-    local scrollSpeed = 5
+    local scrollSpeed = 0
     local playerRect
     local obstacle01Left
     local obstacle01Right
@@ -13,11 +13,17 @@
     local obstacle04Left
     local obstacle05Right -- which is out of canvas at the init
     local obstacle05Left -- which is out of canvas at the init
+    local randomY01
+    local randomdistancebetweenObject1
+
+    local physics = require ("physics")
+    physics.start( )
+    --physics.setDrawMode( "hybrid" )
 
     --function to draw idiotic player
     local function addPlayer()
     	local playerSprite = {type = "image",filename="player.png"}
-    	playerRect = display.newRect(540, 1700, 150, 150)
+    	playerRect = display.newRect(540, 1700, 75, 75)
     	playerRect.fill = playerSprite
     end
 
@@ -114,19 +120,53 @@
     local function enterFrame()  
         local dt = getDeltaTime()
         moveBg(dt)
+        --print(playerRect.y)
+      	--print(randomY01)
+        
         if obstacle01Left ~=nil then
         	obstacle01Left.y = obstacle01Left.y + scrollSpeed + 3.8
         	obstacle01Right.y = obstacle01Right.y + scrollSpeed + 3.8
+        	if obstacle01Left.y > 1920 then
+        		obstacle01Left.y = 0
+        		obstacle01Right.y = 0
+        		--print("skor+")
+        	end
         	obstacle02Left.y = obstacle02Left.y + scrollSpeed + 3.8
         	obstacle02Right.y = obstacle02Right.y + scrollSpeed + 3.8
+        	if obstacle02Left.y > 1920 then
+        		obstacle02Left.y = 0
+        		obstacle02Right.y = 0
+        	end
         	obstacle03Left.y = obstacle03Left.y + scrollSpeed + 3.8
         	obstacle03Right.y = obstacle03Right.y + scrollSpeed + 3.8
+        	if obstacle03Left.y > 1920 then
+        		obstacle03Left.y = 0
+        		obstacle03Right.y = 0
+        	end
         	obstacle04Left.y = obstacle04Left.y + scrollSpeed + 3.8
         	obstacle04Right.y = obstacle04Right.y + scrollSpeed + 3.8
+        	if obstacle04Left.y > 1920 then
+        		obstacle04Left.y = 0
+        		obstacle04Right.y = 0
+        	end
         	obstacle05Left.y = obstacle05Left.y + scrollSpeed + 3.8
         	obstacle05Right.y = obstacle05Right.y + scrollSpeed + 3.8
+        	if obstacle01Left.y > 1920 then
+        		obstacle05Left.y = 0
+        		obstacle05Right.y = 0
+        	end
         	--print(obstacle01Right.y)
         end
+    end
+
+    --listener for collission detection
+    local function onLocalCollision(self,event)
+    	print("sss")
+    	if(event.phase == "began") then
+    		if(self.ID == "Player" and event.other.ID == "obstacle") then
+    			print("crash!")
+    		end
+    	end
     end
 
     --runs only once to prevent memory issues
@@ -138,6 +178,13 @@
         addPlayer()
         spinPlayer()
         playerRect:addEventListener("touch", playerRect)
+        playerRect.collision = onLocalCollision
+        physics.addBody( playerRect )
+        playerRect:addEventListener( "collision", playerRect )
+        playerRect.gravityScale = 0
+        playerRect.isSensor = true
+        playerRect.ID = "Player"
+        
     end
 
     --main 
@@ -145,7 +192,7 @@
     local deneme = timer.performWithDelay (750, spinPlayer, 0)
     local speedUp = timer.performWithDelay(1000, speedUpScroll, 0)
     
-    local randomY01 = math.random(100,740)
+    randomY01 = math.random(100,740)
     
     local randomY02 = math.random(100,740) -- distance between first obs. from bottom and second
     local randomX02 = math.random(850,1000) -- distance between second level obstacles
@@ -156,10 +203,10 @@
     local randomY04 = math.random(100,740) -- distance between third obs. from bottom and fourth
     local randomX04 = math.random(50,200) -- distance between fourth level obstacles
 
-    local randomY05 = math.random(100,740) 
-    local randomX05 = math.random(-350,-200)
+    local randomY05 = math.random(100,740) -- distance between fifth obs. from bottom and fifth
+    local randomX05 = math.random(-350,-200) -- out of canvas when first created
 
-    local randomdistancebetweenObject1 = math.random(840,900) -- distance between first obs. from bottom
+    randomdistancebetweenObject1 = math.random(840,900) -- distance between first obs. from bottom
     local randomdistancebetweenObject2 = math.random(840,900) -- distance between second obs. from bottom
     local randomdistancebetweenObject3 = math.random(840,900) -- distance between third obs. from bottom
     local randomdistancebetweenObject4 = math.random(840,900) -- distance between fourth obs. from bottom
@@ -168,49 +215,68 @@
     obstacle01Left = display.newRect(0, 1300, randomY01, 150)
     obstacle01Left.anchorX = 0
     obstacle01Left.align = "left"
+    obstacle01Left.ID = "obstacle"
 
     obstacle01Right = display.newRect(display.contentWidth, 1300, randomdistancebetweenObject1 - randomY01, 150)
     obstacle01Right.anchorX = 1
     obstacle01Right.align = "right"
+    obstacle01Right.ID = "obstacle"
 
     -- second set of obstacles
     obstacle02Left = display.newRect(0, randomX02, randomY02, 150)
     obstacle02Left.anchorX = 0
     obstacle02Left.align = "left"
+    obstacle02Left.ID = "obstacle"
 
     obstacle02Right = display.newRect(display.contentWidth, randomX02, randomdistancebetweenObject2 - randomY02, 150)
     obstacle02Right.anchorX = 1
     obstacle02Right.align = "right"
+    obstacle02Right.ID = "obstacle"
 
     -- third set of obstacles
     obstacle03Left = display.newRect(0, randomX03, randomY03, 150)
     obstacle03Left.anchorX = 0
     obstacle03Left.align = "left"
+    obstacle03Left.ID = "obstacle"
 
     obstacle03Right = display.newRect(display.contentWidth, randomX03, randomdistancebetweenObject3 - randomY03, 150)
     obstacle03Right.anchorX = 1
     obstacle03Right.align = "right"
+    obstacle03Right.ID = "obstacle"
 
     -- fourth set of obstacles
     obstacle04Left = display.newRect(0, randomX04, randomY04, 150)
     obstacle04Left.anchorX = 0
     obstacle04Left.align = "left"
+    obstacle04Left.ID = "obstacle"
 
     obstacle04Right = display.newRect(display.contentWidth, randomX04, randomdistancebetweenObject4 - randomY04, 150)
     obstacle04Right.anchorX = 1
     obstacle04Right.align = "right"
+    obstacle04Right.ID = "obstacle"
 
     -- fifth set of obstacles
     obstacle05Left = display.newRect(0, randomX05, randomY05, 150)
     obstacle05Left.anchorX = 0
     obstacle05Left.align = "left"
+    obstacle05Left.ID = "obstacle"
 
     obstacle05Right = display.newRect(display.contentWidth, randomX05, randomdistancebetweenObject4 - randomY05, 150)
     obstacle05Right.anchorX = 1
     obstacle05Right.align = "right"
+    obstacle05Right.ID = "obstacle"
 
 
-   	
+   	physics.addBody(obstacle01Left, "static")
+    physics.addBody(obstacle01Right, "static")
+    physics.addBody(obstacle02Left, "static")
+    physics.addBody(obstacle02Right, "static")
+    physics.addBody(obstacle03Left, "static")
+    physics.addBody(obstacle03Right, "static")
+    physics.addBody(obstacle04Left, "static")
+    physics.addBody(obstacle04Right, "static")
+    physics.addBody(obstacle05Left, "static")
+    physics.addBody(obstacle05Right, "static")
     local randomColor = timer.performWithDelay(50, randomcolorFill, 0)
 
     --touch event listener for player movement
@@ -221,7 +287,7 @@
     		print("began")
     	elseif event.phase == "moved" then
     		local x = (event.x - event.xStart) + self.markX
-    		print(x)
+    		--print(x)
     		if x < 120 then
     			self.x = 120
     		elseif x + 120 > display.contentWidth then
