@@ -26,15 +26,17 @@
     local randomY04
     local randomX05
     local randomY05
-
+    local score = 0
+    local myText
+    local scoreBg
     local physics = require ("physics")
     physics.start( )
-    physics.setDrawMode( "hybrid" )
+    --physics.setDrawMode( "hybrid" )
 
     --function to draw idiotic player
     local function addPlayer()
     	local playerSprite = {type = "image",filename="player.png"}
-    	playerRect = display.newCircle(540, 1700, 35)
+    	playerRect = display.newCircle(540, 1700, 50)
     	playerRect.fill = playerSprite
     end
 
@@ -75,25 +77,25 @@
     	obstacle05Left.g = math.random()
     	obstacle05Left.b = math.random()
 
-    	obstacle01Left:setFillColor(obstacle01Left.r,obstacle01Left.g,obstacle01Left.b)
-    	obstacle01Right:setFillColor(obstacle01Left.r,obstacle01Left.g,obstacle01Left.b)
+    	obstacle01Left:setFillColor(0.99,0.66,0.12)
+    	obstacle01Right:setFillColor(0.99,0.66,0.12)
 
-    	--obstacle02Left:setFillColor(obstacle02Left.r,obstacle02Left.g,obstacle02Left.b)
-    	--obstacle02Right:setFillColor(obstacle02Left.r,obstacle02Left.g,obstacle02Left.b)
+    	obstacle02Left:setFillColor(0.99,0.92,0.72)
+    	obstacle02Right:setFillColor(0.99,0.92,0.72)
 
-    	obstacle03Left:setFillColor(obstacle03Left.r,obstacle03Left.g,obstacle03Left.b)
-    	obstacle03Right:setFillColor(obstacle03Left.r,obstacle03Left.g,obstacle03Left.b)
+    	obstacle03Left:setFillColor(0.48,0.63,0.54)
+    	obstacle03Right:setFillColor(0.48,0.63,0.54)
 
-    	obstacle04Left:setFillColor(obstacle04Left.r,obstacle04Left.g,obstacle04Left.b)
-    	obstacle04Right:setFillColor(obstacle04Left.r,obstacle04Left.g,obstacle04Left.b)
+    	obstacle04Left:setFillColor(0.79,0.81,0.84)
+    	obstacle04Right:setFillColor(0.79,0.81,0.84)
 
-    	obstacle05Left:setFillColor(obstacle04Left.r,obstacle04Left.g,obstacle04Left.b)
-    	obstacle05Right:setFillColor(obstacle04Left.r,obstacle04Left.g,obstacle04Left.b)
+    	obstacle05Left:setFillColor(0.19,0.25,0.29)
+    	obstacle05Right:setFillColor(0.19,0.25,0.29)
     end
 
     --scrollable bg main
     local function addScrollableBg()  
-        local bgImage = { type="image", filename="bg_main.jpg" }
+        local bgImage = { type="image", filename="bg1.png" }
         --local bgImage2 = {type = "image",filename="deneme2.jpg"}
         -- Add First bg image
         bg1 = display.newRect(0, 0, display.contentWidth, display.actualContentHeight)
@@ -132,8 +134,9 @@
         local dt = getDeltaTime()
         moveBg(dt)
         --print(playerRect.y)
-      	--print(randomY01)
-        
+		scoreBg:toFront( )
+        myText:toFront( )
+
         if obstacle01Left ~=nil then
         	obstacle01Left.y = obstacle01Left.y + scrollSpeed + 3.8
         	obstacle01Right.y = obstacle01Right.y + scrollSpeed + 3.8
@@ -144,7 +147,9 @@
     		 	physics.removeBody( obstacle01Right )
         		physics.addBody(obstacle01Left, "static")
     			physics.addBody(obstacle01Right, "static")
-        		--print("skor+")
+        		score = score + 1
+        		print("Score:".. score)
+        		myText.text = score
         	end
         	obstacle02Left.y = obstacle02Left.y + scrollSpeed + 3.8
         	obstacle02Right.y = obstacle02Right.y + scrollSpeed + 3.8
@@ -163,6 +168,9 @@
     		 	physics.removeBody( obstacle02Right )
     		 	physics.addBody(obstacle02Left, "static")
    	 			physics.addBody(obstacle02Right, "static")
+   	 			score = score + 1
+        		print("Score:".. score)
+        		myText.text = score
         	end
         	obstacle03Left.y = obstacle03Left.y + scrollSpeed + 3.8
         	obstacle03Right.y = obstacle03Right.y + scrollSpeed + 3.8
@@ -180,6 +188,9 @@
     		 	physics.removeBody( obstacle03Right )
     		 	physics.addBody(obstacle03Left, "static")
    	 			physics.addBody(obstacle03Right, "static")
+   	 			score = score + 1
+        		print("Score:".. score)
+        		myText.text = score
         	end
         	obstacle04Left.y = obstacle04Left.y + scrollSpeed + 3.8
         	obstacle04Right.y = obstacle04Right.y + scrollSpeed + 3.8
@@ -197,6 +208,9 @@
     		 	physics.removeBody( obstacle04Right )
     		 	physics.addBody(obstacle04Left, "static")
    	 			physics.addBody(obstacle04Right, "static")
+   	 			score = score + 1
+        		print("Score:".. score)
+        		myText.text = score
         	end
         	obstacle05Left.y = obstacle05Left.y + scrollSpeed + 3.8
         	obstacle05Right.y = obstacle05Right.y + scrollSpeed + 3.8
@@ -214,17 +228,11 @@
     		 	physics.removeBody( obstacle05Right )
     		 	physics.addBody(obstacle05Left, "static")
    	 			physics.addBody(obstacle05Right, "static")
+        		score = score + 1
+        		print("Score:".. score)
+        		myText.text = score
         	end
-        	--print(obstacle01Right.y)
         end
-
-    	
-    	physics.addBody(obstacle03Left, "static")
-    	physics.addBody(obstacle03Right, "static")
-    	physics.addBody(obstacle04Left, "static")
-    	physics.addBody(obstacle04Right, "static")
-    	physics.addBody(obstacle05Left, "static")
-    	physics.addBody(obstacle05Right, "static")
     end
 
     --listener for collission detection
@@ -234,6 +242,8 @@
     		if(self.ID == "Player" and event.other.ID == "obstacle") then
     			--native.showAlert( "Game Over!", "Crashed" )
     			print("Crashed!")
+    			score = 0
+    			myText.text = score
     		end
     	end
     end
@@ -253,7 +263,14 @@
         playerRect.gravityScale = 0
         playerRect.isSensor = true
         playerRect.ID = "Player"
-        
+        --local group = display.newGroup()
+        myText = display.newText( "0", 995, 100, native.systemFont, 100)
+		myText:setFillColor( 1, 1, 1 )
+
+		scoreBg = display.newRoundedRect( 1150, 100, 500, 150 , 20 )
+		scoreBg:setFillColor( 0.76, 0.30, 0.30)
+		--group:insert(myText)
+
     end
 
     --main 
