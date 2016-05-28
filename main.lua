@@ -258,7 +258,7 @@
         spinPlayer()
         playerRect:addEventListener("touch", playerRect)
         playerRect.collision = onLocalCollision
-        physics.addBody( playerRect )
+        physics.addBody( playerRect, {radius=50} )
         playerRect:addEventListener( "collision", playerRect )
         playerRect.gravityScale = 0
         playerRect.isSensor = true
@@ -298,56 +298,56 @@
     randomdistancebetweenObject4 = math.random(840,900) -- distance between fourth obs. from bottom
 	randomdistancebetweenObject5 = math.random(840,900) -- distance between fourth obs. from bottom
     -- first set of obstacles
-    obstacle01Left = display.newRect(0, 1300, randomY01, 150)
+    obstacle01Left = display.newRoundedRect(0, 1300, randomY01, 150, 50)
     obstacle01Left.anchorX = 0
     obstacle01Left.align = "left"
     obstacle01Left.ID = "obstacle"
 
-    obstacle01Right = display.newRect(display.contentWidth, 1300, randomdistancebetweenObject1 - randomY01, 150)
+    obstacle01Right = display.newRoundedRect(display.contentWidth, 1300, randomdistancebetweenObject1 - randomY01, 150, 50)
     obstacle01Right.anchorX = 1
     obstacle01Right.align = "right"
     obstacle01Right.ID = "obstacle"
 
     -- second set of obstacles
-    obstacle02Left = display.newRect(0, randomX02, randomY02, 150)
+    obstacle02Left = display.newRoundedRect(0, randomX02, randomY02, 150, 50)
     obstacle02Left.anchorX = 0
     obstacle02Left.align = "left"
     obstacle02Left.ID = "obstacle"
 
-    obstacle02Right = display.newRect(display.contentWidth, randomX02, randomdistancebetweenObject2 - randomY02, 150)
+    obstacle02Right = display.newRoundedRect(display.contentWidth, randomX02, randomdistancebetweenObject2 - randomY02, 150, 50)
     obstacle02Right.anchorX = 1
     obstacle02Right.align = "right"
     obstacle02Right.ID = "obstacle"
 
     -- third set of obstacles
-    obstacle03Left = display.newRect(0, randomX03, randomY03, 150)
+    obstacle03Left = display.newRoundedRect(0, randomX03, randomY03, 150, 50)
     obstacle03Left.anchorX = 0
     obstacle03Left.align = "left"
     obstacle03Left.ID = "obstacle"
 
-    obstacle03Right = display.newRect(display.contentWidth, randomX03, randomdistancebetweenObject3 - randomY03, 150)
+    obstacle03Right = display.newRoundedRect(display.contentWidth, randomX03, randomdistancebetweenObject3 - randomY03, 150, 50)
     obstacle03Right.anchorX = 1
     obstacle03Right.align = "right"
     obstacle03Right.ID = "obstacle"
 
     -- fourth set of obstacles
-    obstacle04Left = display.newRect(0, randomX04, randomY04, 150)
+    obstacle04Left = display.newRoundedRect(0, randomX04, randomY04, 150, 50)
     obstacle04Left.anchorX = 0
     obstacle04Left.align = "left"
     obstacle04Left.ID = "obstacle"
 
-    obstacle04Right = display.newRect(display.contentWidth, randomX04, randomdistancebetweenObject4 - randomY04, 150)
+    obstacle04Right = display.newRoundedRect(display.contentWidth, randomX04, randomdistancebetweenObject4 - randomY04, 150, 50)
     obstacle04Right.anchorX = 1
     obstacle04Right.align = "right"
     obstacle04Right.ID = "obstacle"
 
     -- fifth set of obstacles
-    obstacle05Left = display.newRect(0, randomX05, randomY05, 150)
+    obstacle05Left = display.newRoundedRect(0, randomX05, randomY05, 150, 50)
     obstacle05Left.anchorX = 0
     obstacle05Left.align = "left"
     obstacle05Left.ID = "obstacle"
 
-    obstacle05Right = display.newRect(display.contentWidth, randomX05, randomdistancebetweenObject5 - randomY05, 150)
+    obstacle05Right = display.newRoundedRect(display.contentWidth, randomX05, randomdistancebetweenObject5 - randomY05, 150, 50)
     obstacle05Right.anchorX = 1
     obstacle05Right.align = "right"
     obstacle05Right.ID = "obstacle"
